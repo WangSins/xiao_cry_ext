@@ -3,47 +3,50 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:xiao_cry_ext/constant/api_constant.dart';
 import 'package:xiao_cry_ext/entity/satin_entity.dart';
 
-class SatinGif extends StatefulWidget {
+class SatinGifPage extends StatefulWidget {
   @override
-  _SatinGifState createState() => _SatinGifState();
+  _SatinGifPageState createState() => _SatinGifPageState();
 }
 
-class _SatinGifState extends State<SatinGif> {
-  List<SatinData> lists = [];
-  int page = 0;
-  int type = 4;
+class _SatinGifPageState extends State<SatinGifPage> {
+  List<SatinData> _lists = [];
+  int _page = 0;
   ScrollController _scrollController = new ScrollController();
 
   Future<void> _onRefresh() async {
-    var responce = await http
-        .get("https://www.apiopen.top/satinGodApi?type=$type&page=${page = 0}");
-    var satin = SatinEntity.fromJson(json.decode(responce.body));
+    var _responce = await http.get(APIConstant.BASE_URL +
+        APIConstant.ACTION_SATIN_GOD_API +
+        "?type=${APIConstant.TYPE_GIF}&page=${_page = 0}");
+    var _satin = SatinEntity.fromJson(json.decode(_responce.body));
     setState(() {
-      lists = satin.data;
+      _lists = _satin.data;
     });
-    print("SatinGif_onRefresh:${lists.length}");
+    print("SatinGifPage_onRefresh:${_lists.length}");
   }
 
   _initData() async {
-    var responce = await http
-        .get("https://www.apiopen.top/satinGodApi?type=$type&page=${page = 0}");
-    var satin = SatinEntity.fromJson(json.decode(responce.body));
+    var _responce = await http.get(APIConstant.BASE_URL +
+        APIConstant.ACTION_SATIN_GOD_API +
+        "?type=${APIConstant.TYPE_GIF}&page=${_page = 0}");
+    var _satin = SatinEntity.fromJson(json.decode(_responce.body));
     setState(() {
-      lists = satin.data;
+      _lists = _satin.data;
     });
-    print("SatinGif_initData:${lists.length}");
+    print("SatinGifPage_initData:${_lists.length}");
   }
 
   _loadMore() async {
-    var responce = await http
-        .get("https://www.apiopen.top/satinGodApi?type=$type&page=${++page}");
-    var satin = SatinEntity.fromJson(json.decode(responce.body));
+    var _responce = await http.get(APIConstant.BASE_URL +
+        APIConstant.ACTION_SATIN_GOD_API +
+        "?type=${APIConstant.TYPE_GIF}&page=${++_page}");
+    var _satin = SatinEntity.fromJson(json.decode(_responce.body));
     setState(() {
-      lists.addAll(satin.data);
+      _lists.addAll(_satin.data);
     });
-    print("SatinGif_loadMore:${lists.length}");
+    print("SatinGifPage_loadMore:${_lists.length}");
   }
 
   @override
@@ -59,6 +62,12 @@ class _SatinGifState extends State<SatinGif> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -67,7 +76,7 @@ class _SatinGifState extends State<SatinGif> {
           child: StaggeredGridView.countBuilder(
             controller: _scrollController,
             crossAxisCount: 4,
-            itemCount: lists.length,
+            itemCount: _lists.length,
             itemBuilder: (context, index) {
               return Card(
                 elevation: 2.0,
@@ -82,13 +91,15 @@ class _SatinGifState extends State<SatinGif> {
                         ),
                         child: CachedNetworkImage(
                           fit: BoxFit.contain,
-                          imageUrl: lists[index].gif,
+                          imageUrl: _lists[index].gif,
                           placeholder: (context, url) => new Container(
-                            padding: EdgeInsets.all(4.0),
+                            padding: EdgeInsets.all(6.0),
                             child: CircularProgressIndicator(),
                           ),
-                          errorWidget: (context, url, error) =>
-                              new Icon(Icons.error),
+                          errorWidget: (context, url, error) => new Icon(
+                            Icons.broken_image,
+                            size: 50.0,
+                          ),
                         ),
                       ),
                     ),
@@ -97,9 +108,9 @@ class _SatinGifState extends State<SatinGif> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(lists[index].text),
+                          Text(_lists[index].text),
                           Text(
-                            "热评：${lists[index].topCommentsContent ?? "暂无热评"}",
+                            "热评：${_lists[index].topCommentsContent ?? "暂无热评"}",
                             style: TextStyle(
                                 color: Colors.blueGrey, fontSize: 12.0),
                           ),

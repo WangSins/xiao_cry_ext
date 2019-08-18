@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:xiao_cry_ext/widget/satin_gif.dart';
-import 'package:xiao_cry_ext/widget/satin_image.dart';
-import 'package:xiao_cry_ext/widget/satin_text.dart';
+import 'package:xiao_cry_ext/page/satin_gif_page.dart';
+import 'package:xiao_cry_ext/page/satin_image_page.dart';
+import 'package:xiao_cry_ext/page/satin_text_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        children: <Widget>[SatinText(), SatinImage(), SatinGif()],
+        children: <Widget>[SatinTextPage(), SatinImagePage(), SatinGifPage()],
         index: _currentIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
