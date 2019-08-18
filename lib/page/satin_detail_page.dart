@@ -36,9 +36,20 @@ class _SatinDetailPageState extends State<SatinDetailPage> {
             fit: BoxFit.contain,
             imageUrl: widget.image ?? widget.gif,
             errorWidget: (context, url, error) => new Center(
-              child: Icon(
-                Icons.broken_image,
-                size: 160,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 180.0,
+                  ),
+                  Icon(
+                    Icons.error_outline,
+                    size: 100.0,
+                  ),
+                  Text(
+                    "图片加载异常!",
+                    style: TextStyle(fontSize: 16.0),
+                  )
+                ],
               ),
             ),
           ),
