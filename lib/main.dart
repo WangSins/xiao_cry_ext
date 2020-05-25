@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:xiao_cry_ext/page/satin_gif_page.dart';
-import 'package:xiao_cry_ext/page/satin_image_page.dart';
-import 'package:xiao_cry_ext/page/satin_text_page.dart';
+import 'package:xiao_cry_ext/page/joke_gif_page.dart';
+import 'package:xiao_cry_ext/page/joke_image_page.dart';
+import 'package:xiao_cry_ext/page/joke_text_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        children: <Widget>[SatinTextPage(), SatinImagePage(), SatinGifPage()],
+        children: <Widget>[JokeTextPage(), JokeImagePage(), JokeGifPage()],
         index: _currentIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -54,11 +54,11 @@ class _MyHomePageState extends State<MyHomePage> {
         fixedColor: Colors.black,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.tag_faces), title: Text('SatinText')),
+              icon: Icon(Icons.tag_faces), title: Text('JokeText')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.image), title: Text('SatinImage')),
+              icon: Icon(Icons.image), title: Text('JokeImage')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.gif), title: Text('SatinGif')),
+              icon: Icon(Icons.gif), title: Text('JokeGif')),
         ],
       ),
     );

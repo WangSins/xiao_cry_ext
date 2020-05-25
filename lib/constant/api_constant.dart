@@ -1,7 +1,7 @@
 class APIConstant {
-  static const TYPE_TEXT = 2;
-  static const TYPE_IMAGE = 3;
-  static const TYPE_GIF = 4;
-  static const BASE_URL = "https://www.apiopen.top/";
-  static const ACTION_SATIN_GOD_API = "satinGodApi";
+  static const TYPE_TEXT = "text";
+  static const TYPE_IMAGE = "image";
+  static const TYPE_GIF = "gif";
+  static const BASE_URL = "https://api.apiopen.top/";
+  static const ACTION_GET_JOKE = "getJoke";
 }

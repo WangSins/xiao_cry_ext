@@ -1,18 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class SatinDetailPage extends StatefulWidget {
+class JokeDetailPage extends StatefulWidget {
   final String title;
-  final String gif;
   final String image;
 
-  SatinDetailPage({Key key, this.title, this.gif, this.image})
-      : super(key: key);
+  JokeDetailPage({Key key, this.title, this.image}) : super(key: key);
   @override
-  _SatinDetailPageState createState() => _SatinDetailPageState();
+  _JokeDetailPageState createState() => _JokeDetailPageState();
 }
 
-class _SatinDetailPageState extends State<SatinDetailPage> {
+class _JokeDetailPageState extends State<JokeDetailPage> {
   @override
   void initState() {
     super.initState();
@@ -34,7 +32,7 @@ class _SatinDetailPageState extends State<SatinDetailPage> {
         child: Center(
           child: CachedNetworkImage(
             fit: BoxFit.contain,
-            imageUrl: widget.image ?? widget.gif,
+            imageUrl: widget.image,
             errorWidget: (context, url, error) => new Center(
               child: Column(
                 children: <Widget>[

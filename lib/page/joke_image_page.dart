@@ -5,50 +5,50 @@ import 'dart:convert';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:xiao_cry_ext/constant/api_constant.dart';
-import 'package:xiao_cry_ext/entity/satin_entity.dart';
-import 'package:xiao_cry_ext/page/satin_detail_page.dart';
+import 'package:xiao_cry_ext/entity/joke_entity.dart';
+import 'package:xiao_cry_ext/page/joke_detail_page.dart';
 
-class SatinImagePage extends StatefulWidget {
+class JokeImagePage extends StatefulWidget {
   @override
-  _SatinImageState createState() => _SatinImageState();
+  _JokeImageState createState() => _JokeImageState();
 }
 
-class _SatinImageState extends State<SatinImagePage> {
-  List<SatinData> _lists = [];
+class _JokeImageState extends State<JokeImagePage> {
+  List<JokeResult> _lists = [];
   int _page = 0;
   ScrollController _scrollController = new ScrollController();
 
   Future<void> _onRefresh() async {
     var _responce = await http.get(APIConstant.BASE_URL +
-        APIConstant.ACTION_SATIN_GOD_API +
+        APIConstant.ACTION_GET_JOKE +
         "?type=${APIConstant.TYPE_IMAGE}&page=${_page = 0}");
-    var _satin = SatinEntity.fromJson(json.decode(_responce.body));
+    var _joke = JokeEntity.fromJson(json.decode(_responce.body));
     setState(() {
-      _lists = _satin.data;
+      _lists = _joke.result;
     });
-    print("SatinImage_onRefresh:${_lists.length}");
+    print("JokeImage_onRefresh:${_lists.length}");
   }
 
   _initData() async {
     var _responce = await http.get(APIConstant.BASE_URL +
-        APIConstant.ACTION_SATIN_GOD_API +
+        APIConstant.ACTION_GET_JOKE +
         "?type=${APIConstant.TYPE_IMAGE}&page=${_page = 0}");
-    var _satin = SatinEntity.fromJson(json.decode(_responce.body));
+    var _joke = JokeEntity.fromJson(json.decode(_responce.body));
     setState(() {
-      _lists = _satin.data;
+      _lists = _joke.result;
     });
-    print("SatinImage_initData:${_lists.length}");
+    print("JokeImage_initData:${_lists.length}");
   }
 
   _loadMore() async {
     var _responce = await http.get(APIConstant.BASE_URL +
-        APIConstant.ACTION_SATIN_GOD_API +
+        APIConstant.ACTION_GET_JOKE +
         "?type=${APIConstant.TYPE_IMAGE}&page=${++_page}");
-    var _satin = SatinEntity.fromJson(json.decode(_responce.body));
+    var _joke = JokeEntity.fromJson(json.decode(_responce.body));
     setState(() {
-      _lists.addAll(_satin.data);
+      _lists.addAll(_joke.result);
     });
-    print("SatinImage_loadMore:${_lists.length}");
+    print("JokeImage_loadMore:${_lists.length}");
   }
 
   @override
@@ -84,9 +84,9 @@ class _SatinImageState extends State<SatinImagePage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext ctx) {
-                    return new SatinDetailPage(
+                    return new JokeDetailPage(
                       title: _lists[index].text,
-                      image: _lists[index].image,
+                      image: _lists[index].images,
                     );
                   }));
                 },
@@ -100,7 +100,7 @@ class _SatinImageState extends State<SatinImagePage> {
                         child: Center(
                           child: CachedNetworkImage(
                             fit: BoxFit.contain,
-                            imageUrl: _lists[index].image,
+                            imageUrl: _lists[index].images,
                             placeholder: (context, url) => new Container(
                               padding: EdgeInsets.all(6.0),
                               child: CircularProgressIndicator(),
