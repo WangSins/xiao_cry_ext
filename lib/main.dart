@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xiao_cry_ext/page/joke_gif_page.dart';
 import 'package:xiao_cry_ext/page/joke_image_page.dart';
 import 'package:xiao_cry_ext/page/joke_text_page.dart';
+import 'package:xiao_cry_ext/page/joke_video_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'XiaoCry Extend',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        accentColor: Colors.grey,
       ),
       home: MyHomePage(title: 'XiaoCry Extend Home Page'),
     );
@@ -44,7 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        children: <Widget>[JokeTextPage(), JokeImagePage(), JokeGifPage()],
+        children: <Widget>[
+          JokeTextPage(),
+          JokeImagePage(),
+          JokeGifPage(),
+          JokeVideoPage()
+        ],
         index: _currentIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -59,6 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.image), title: Text('JokeImage')),
           BottomNavigationBarItem(
               icon: Icon(Icons.gif), title: Text('JokeGif')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.video_library), title: Text('JokeVideo')),
         ],
       ),
     );
