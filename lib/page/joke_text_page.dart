@@ -12,50 +12,53 @@ class JokeTextPage extends StatefulWidget {
 
 class _JokeTextPageState extends State<JokeTextPage> {
   List<JokeResult> _lists = [];
-  int _page = 0;
+  int _page = 1;
   ScrollController _scrollController = new ScrollController();
+  bool _showFBA = false;
 
   Future<void> _onRefresh() async {
     var _responce = await http.get(APIConstant.BASE_URL +
         APIConstant.ACTION_GET_JOKE +
-        "?type=${APIConstant.TYPE_TEXT}&page=${_page = 0}");
+        "?type=${APIConstant.TYPE_TEXT}&count=${APIConstant.DEFAULT_COUNT}&page=${_page = 1}");
     var _joke = JokeEntity.fromJson(json.decode(_responce.body));
     setState(() {
       _lists = _joke.result;
     });
-    print("JokeTextPage_onRefresh:${_lists.length}");
   }
 
-  _initData() async {
-    var _responce = await http.get(APIConstant.BASE_URL +
+  _loadMore(bool isRefresh) async {
+    var _url = APIConstant.BASE_URL +
         APIConstant.ACTION_GET_JOKE +
-        "?type=${APIConstant.TYPE_TEXT}&page=${_page = 0}");
+        "?type=${APIConstant.TYPE_TEXT}&count=${APIConstant.DEFAULT_COUNT}&page=${isRefresh ? _page = 1 : ++_page}";
+    var _responce = await http.get(_url);
     var _joke = JokeEntity.fromJson(json.decode(_responce.body));
     setState(() {
-      _lists = _joke.result;
+      if (isRefresh) {
+        _lists = _joke.result;
+      } else {
+        _lists.addAll(_joke.result);
+      }
     });
-    print("JokeTextPage_initData:${_lists.length}");
-  }
-
-  _loadMore() async {
-    var _responce = await http.get(APIConstant.BASE_URL +
-        APIConstant.ACTION_GET_JOKE +
-        "?type=${APIConstant.TYPE_TEXT}&page=${++_page}");
-    var _joke = JokeEntity.fromJson(json.decode(_responce.body));
-    setState(() {
-      _lists.addAll(_joke.result);
-    });
-    print("JokeTextPage_loadMore:${_lists.length}");
   }
 
   @override
   void initState() {
     super.initState();
-    _initData();
+    _loadMore(true);
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _loadMore();
+        _loadMore(false);
+      }
+      if (_scrollController.offset >
+          _scrollController.position.minScrollExtent) {
+        setState(() {
+          _showFBA = true;
+        });
+      } else {
+        setState(() {
+          _showFBA = false;
+        });
       }
     });
   }
@@ -98,6 +101,18 @@ class _JokeTextPageState extends State<JokeTextPage> {
             staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
           ),
           onRefresh: _onRefresh),
+      floatingActionButton: !_showFBA
+          ? null
+          : FloatingActionButton(
+              onPressed: () {
+                _scrollController.jumpTo(0);
+              },
+              child: Icon(
+                Icons.arrow_upward,
+              ),
+              backgroundColor: Colors.grey[100],
+              heroTag: APIConstant.TYPE_TEXT,
+            ),
     );
   }
 }
