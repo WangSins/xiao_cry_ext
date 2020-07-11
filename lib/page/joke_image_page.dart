@@ -87,7 +87,7 @@ class _JokeImageState extends State<JokeImagePage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext ctx) {
-                    return new JokeDetailPage(
+                    return new JokeDrawableDetailPage(
                       title: _lists[index].text,
                       image: _lists[index].images,
                     );

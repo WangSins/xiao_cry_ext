@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class JokeDetailPage extends StatefulWidget {
+class JokeDrawableDetailPage extends StatefulWidget {
   final String title;
   final String image;
 
-  JokeDetailPage({Key key, this.title, this.image}) : super(key: key);
+  JokeDrawableDetailPage({Key key, this.title, this.image}) : super(key: key);
   @override
-  _JokeDetailPageState createState() => _JokeDetailPageState();
+  _JokeDrawableDetailPageState createState() => _JokeDrawableDetailPageState();
 }
 
-class _JokeDetailPageState extends State<JokeDetailPage> {
+class _JokeDrawableDetailPageState extends State<JokeDrawableDetailPage> {
   @override
   void initState() {
     super.initState();
@@ -24,28 +24,33 @@ class _JokeDetailPageState extends State<JokeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(4.0),
-        child: Center(
+      body: Center(
+        child: SingleChildScrollView(
           child: CachedNetworkImage(
             fit: BoxFit.contain,
             imageUrl: widget.image,
             errorWidget: (context, url, error) => new Center(
               child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    height: 180.0,
-                  ),
                   Icon(
                     Icons.error_outline,
+                    color: Colors.white,
                     size: 100.0,
                   ),
                   Text(
                     "图片加载异常!",
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 16.0, color: Colors.white),
                   )
                 ],
               ),
