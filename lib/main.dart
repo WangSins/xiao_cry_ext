@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.grey,
       ),
       home: MyHomePage(title: 'XiaoCry Extend Home Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
