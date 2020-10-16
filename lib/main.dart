@@ -61,13 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
         fixedColor: Colors.black,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.tag_faces), title: Text('JokeText')),
+              icon: Icon(Icons.tag_faces), label: 'JokeText'),
+          BottomNavigationBarItem(icon: Icon(Icons.image), label: 'JokeImage'),
+          BottomNavigationBarItem(icon: Icon(Icons.gif), label: 'JokeGif'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.image), title: Text('JokeImage')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.gif), title: Text('JokeGif')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.video_library), title: Text('JokeVideo')),
+              icon: Icon(Icons.video_library), label: 'JokeVideo'),
         ],
       ),
     );
